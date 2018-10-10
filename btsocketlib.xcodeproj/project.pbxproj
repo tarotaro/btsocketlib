@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3440B6766C88B2CD02A8CF46 /* Pods_btsocketlib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3D21348319F7CBF827199FE /* Pods_btsocketlib.framework */; };
 		558E948F216E2FEA009B5B6D /* btsocketlib.m in Sources */ = {isa = PBXBuildFile; fileRef = 558E948E216E2FEA009B5B6D /* btsocketlib.m */; };
 		558E9490216E2FEA009B5B6D /* btsocketlib.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 558E948D216E2FEA009B5B6D /* btsocketlib.h */; };
 /* End PBXBuildFile section */
@@ -28,6 +29,9 @@
 		558E948A216E2FEA009B5B6D /* libbtsocketlib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libbtsocketlib.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		558E948D216E2FEA009B5B6D /* btsocketlib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = btsocketlib.h; sourceTree = "<group>"; };
 		558E948E216E2FEA009B5B6D /* btsocketlib.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = btsocketlib.m; sourceTree = "<group>"; };
+		7D00EDF2BD42D21E3DE8DE59 /* Pods-btsocketlib.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-btsocketlib.debug.xcconfig"; path = "Pods/Target Support Files/Pods-btsocketlib/Pods-btsocketlib.debug.xcconfig"; sourceTree = "<group>"; };
+		AEDEC173A8FF3495B70EFF61 /* Pods-btsocketlib.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-btsocketlib.release.xcconfig"; path = "Pods/Target Support Files/Pods-btsocketlib/Pods-btsocketlib.release.xcconfig"; sourceTree = "<group>"; };
+		B3D21348319F7CBF827199FE /* Pods_btsocketlib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_btsocketlib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,17 +39,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3440B6766C88B2CD02A8CF46 /* Pods_btsocketlib.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1B7BA29182E775A8E598F26F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B3D21348319F7CBF827199FE /* Pods_btsocketlib.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		558E9481216E2FEA009B5B6D = {
 			isa = PBXGroup;
 			children = (
 				558E948C216E2FEA009B5B6D /* btsocketlib */,
 				558E948B216E2FEA009B5B6D /* Products */,
+				D22058192C994C9ADAB3996D /* Pods */,
+				1B7BA29182E775A8E598F26F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -66,6 +81,15 @@
 			path = btsocketlib;
 			sourceTree = "<group>";
 		};
+		D22058192C994C9ADAB3996D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7D00EDF2BD42D21E3DE8DE59 /* Pods-btsocketlib.debug.xcconfig */,
+				AEDEC173A8FF3495B70EFF61 /* Pods-btsocketlib.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -73,9 +97,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 558E9493216E2FEA009B5B6D /* Build configuration list for PBXNativeTarget "btsocketlib" */;
 			buildPhases = (
+				2D5C5A639CB7C5072142E45E /* [CP] Check Pods Manifest.lock */,
 				558E9486216E2FEA009B5B6D /* Sources */,
 				558E9487216E2FEA009B5B6D /* Frameworks */,
 				558E9488216E2FEA009B5B6D /* CopyFiles */,
+				196020ACAB43983E3887E309 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -116,6 +142,42 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		196020ACAB43983E3887E309 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-btsocketlib/Pods-btsocketlib-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2D5C5A639CB7C5072142E45E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-btsocketlib-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		558E9486216E2FEA009B5B6D /* Sources */ = {
@@ -243,6 +305,7 @@
 		};
 		558E9494216E2FEA009B5B6D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7D00EDF2BD42D21E3DE8DE59 /* Pods-btsocketlib.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = F6293WE93E;
@@ -255,6 +318,7 @@
 		};
 		558E9495216E2FEA009B5B6D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AEDEC173A8FF3495B70EFF61 /* Pods-btsocketlib.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = F6293WE93E;
