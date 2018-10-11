@@ -8,8 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		3440B6766C88B2CD02A8CF46 /* Pods_btsocketlib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3D21348319F7CBF827199FE /* Pods_btsocketlib.framework */; };
-		558E948F216E2FEA009B5B6D /* btsocketlib.m in Sources */ = {isa = PBXBuildFile; fileRef = 558E948E216E2FEA009B5B6D /* btsocketlib.m */; };
-		558E9490216E2FEA009B5B6D /* btsocketlib.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 558E948D216E2FEA009B5B6D /* btsocketlib.h */; };
+		558E948F216E2FEA009B5B6D /* btsocketlibImp.m in Sources */ = {isa = PBXBuildFile; fileRef = 558E948E216E2FEA009B5B6D /* btsocketlibImp.m */; };
+		558E9490216E2FEA009B5B6D /* btsocketlibImp.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 558E948D216E2FEA009B5B6D /* btsocketlibImp.h */; };
+		558E9498216F99E1009B5B6D /* btsocketlib.mm in Sources */ = {isa = PBXBuildFile; fileRef = 558E9496216F99E1009B5B6D /* btsocketlib.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -19,7 +20,7 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
-				558E9490216E2FEA009B5B6D /* btsocketlib.h in CopyFiles */,
+				558E9490216E2FEA009B5B6D /* btsocketlibImp.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -27,8 +28,10 @@
 
 /* Begin PBXFileReference section */
 		558E948A216E2FEA009B5B6D /* libbtsocketlib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libbtsocketlib.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		558E948D216E2FEA009B5B6D /* btsocketlib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = btsocketlib.h; sourceTree = "<group>"; };
-		558E948E216E2FEA009B5B6D /* btsocketlib.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = btsocketlib.m; sourceTree = "<group>"; };
+		558E948D216E2FEA009B5B6D /* btsocketlibImp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = btsocketlibImp.h; sourceTree = "<group>"; };
+		558E948E216E2FEA009B5B6D /* btsocketlibImp.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = btsocketlibImp.m; sourceTree = "<group>"; };
+		558E9496216F99E1009B5B6D /* btsocketlib.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = btsocketlib.mm; sourceTree = "<group>"; };
+		558E9497216F99E1009B5B6D /* btsocketlib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = btsocketlib.h; sourceTree = "<group>"; };
 		7D00EDF2BD42D21E3DE8DE59 /* Pods-btsocketlib.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-btsocketlib.debug.xcconfig"; path = "Pods/Target Support Files/Pods-btsocketlib/Pods-btsocketlib.debug.xcconfig"; sourceTree = "<group>"; };
 		AEDEC173A8FF3495B70EFF61 /* Pods-btsocketlib.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-btsocketlib.release.xcconfig"; path = "Pods/Target Support Files/Pods-btsocketlib/Pods-btsocketlib.release.xcconfig"; sourceTree = "<group>"; };
 		B3D21348319F7CBF827199FE /* Pods_btsocketlib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_btsocketlib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -75,8 +78,10 @@
 		558E948C216E2FEA009B5B6D /* btsocketlib */ = {
 			isa = PBXGroup;
 			children = (
-				558E948D216E2FEA009B5B6D /* btsocketlib.h */,
-				558E948E216E2FEA009B5B6D /* btsocketlib.m */,
+				558E948D216E2FEA009B5B6D /* btsocketlibImp.h */,
+				558E948E216E2FEA009B5B6D /* btsocketlibImp.m */,
+				558E9496216F99E1009B5B6D /* btsocketlib.mm */,
+				558E9497216F99E1009B5B6D /* btsocketlib.h */,
 			);
 			path = btsocketlib;
 			sourceTree = "<group>";
@@ -184,7 +189,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				558E948F216E2FEA009B5B6D /* btsocketlib.m in Sources */,
+				558E9498216F99E1009B5B6D /* btsocketlib.mm in Sources */,
+				558E948F216E2FEA009B5B6D /* btsocketlibImp.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
