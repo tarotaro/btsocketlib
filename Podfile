@@ -6,5 +6,5 @@ target 'btsocketlib' do
   use_frameworks!
 
   pod "LGBluetooth", "~> 1.1.5"
-  
+
 end

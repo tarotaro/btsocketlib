@@ -28,6 +28,10 @@ Byte* _recv(int len){
 long _getReadTime(){
     return [[btsocketlibImp sharedInstance] getReadTime];
 }
+
+long _getWriteTime(){
+    return [[btsocketlibImp sharedInstance] getWriteTime];
+}
 int _getConnectState(){
     return [[btsocketlibImp sharedInstance] getConnectState];
 }

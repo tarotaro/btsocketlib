@@ -8,6 +8,8 @@
 
 #ifndef _BTSOCKET_LIB_H_
 #define _BTSOCKET_LIB_H_
+#import <Foundation/Foundation.h>
+
 
 extern "C" {
     void _startServer();
@@ -19,6 +21,7 @@ extern "C" {
     void _send(Byte * data,int len);
     Byte* _recv(int len);
     long _getReadTime();
+    long _getWriteTime();
     int _getConnectState();
     void _disConnect();
 

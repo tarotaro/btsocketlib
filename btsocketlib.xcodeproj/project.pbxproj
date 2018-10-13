@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		3440B6766C88B2CD02A8CF46 /* Pods_btsocketlib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3D21348319F7CBF827199FE /* Pods_btsocketlib.framework */; };
+		55698D0A2172612F00FACF4F /* ReadWriteModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 55698D092172612F00FACF4F /* ReadWriteModel.m */; };
+		55698D0D217269E000FACF4F /* Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = 55698D0C217269E000FACF4F /* Queue.m */; };
 		558E948F216E2FEA009B5B6D /* btsocketlibImp.m in Sources */ = {isa = PBXBuildFile; fileRef = 558E948E216E2FEA009B5B6D /* btsocketlibImp.m */; };
 		558E9490216E2FEA009B5B6D /* btsocketlibImp.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 558E948D216E2FEA009B5B6D /* btsocketlibImp.h */; };
 		558E9498216F99E1009B5B6D /* btsocketlib.mm in Sources */ = {isa = PBXBuildFile; fileRef = 558E9496216F99E1009B5B6D /* btsocketlib.mm */; };
@@ -27,6 +29,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		55698D082172612F00FACF4F /* ReadWriteModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReadWriteModel.h; sourceTree = "<group>"; };
+		55698D092172612F00FACF4F /* ReadWriteModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReadWriteModel.m; sourceTree = "<group>"; };
+		55698D0B217269E000FACF4F /* Queue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Queue.h; sourceTree = "<group>"; };
+		55698D0C217269E000FACF4F /* Queue.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Queue.m; sourceTree = "<group>"; };
 		558E948A216E2FEA009B5B6D /* libbtsocketlib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libbtsocketlib.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		558E948D216E2FEA009B5B6D /* btsocketlibImp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = btsocketlibImp.h; sourceTree = "<group>"; };
 		558E948E216E2FEA009B5B6D /* btsocketlibImp.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = btsocketlibImp.m; sourceTree = "<group>"; };
@@ -82,6 +88,10 @@
 				558E948E216E2FEA009B5B6D /* btsocketlibImp.m */,
 				558E9496216F99E1009B5B6D /* btsocketlib.mm */,
 				558E9497216F99E1009B5B6D /* btsocketlib.h */,
+				55698D082172612F00FACF4F /* ReadWriteModel.h */,
+				55698D092172612F00FACF4F /* ReadWriteModel.m */,
+				55698D0B217269E000FACF4F /* Queue.h */,
+				55698D0C217269E000FACF4F /* Queue.m */,
 			);
 			path = btsocketlib;
 			sourceTree = "<group>";
@@ -191,6 +201,8 @@
 			files = (
 				558E9498216F99E1009B5B6D /* btsocketlib.mm in Sources */,
 				558E948F216E2FEA009B5B6D /* btsocketlibImp.m in Sources */,
+				55698D0A2172612F00FACF4F /* ReadWriteModel.m in Sources */,
+				55698D0D217269E000FACF4F /* Queue.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
