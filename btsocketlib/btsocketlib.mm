@@ -9,11 +9,25 @@
 #include "btsocketlib.h"
 #include "btsocketlibImp.h"
 
-NSString * _getBluetoothIDList(){
-    return [[btsocketlibImp sharedInstance] getBluetoothIDList];
+
+void _startServer(){
+    [[btsocketlibImp sharedInstance] startServer];
 }
-void _connectById(NSString * address){
-    [[btsocketlibImp sharedInstance] connectById:address];
+
+void _searchDevice(){
+    [[btsocketlibImp sharedInstance] searchDevice];
+}
+
+char * _getBluetoothIDList(){
+    NSString *str =[[btsocketlibImp sharedInstance] getBluetoothIDList];
+    const char *p = [str UTF8String];
+    char *ptr = (char *)malloc(sizeof(p));
+    memcpy(ptr,p,sizeof(p));
+    return ptr;
+}
+void _connectById(const char * address){
+    NSString *addr = [NSString stringWithUTF8String:address];
+    [[btsocketlibImp sharedInstance] connectById:addr];
 }
 void _connectByListIndex(int index){
     [[btsocketlibImp sharedInstance] connectByListIndex:index];

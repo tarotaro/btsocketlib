@@ -63,5 +63,9 @@
     return [num charValue];
 }
 
+-(Byte)peek {
+    NSNumber *num = [queue objectAtIndex:0];
+    return [num charValue];
+}
 
 @end

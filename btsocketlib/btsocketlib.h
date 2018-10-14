@@ -15,8 +15,8 @@ extern "C" {
     void _startServer();
     void _searchDevice();
     
-    NSString * _getBluetoothIDList();
-    void _connectById(NSString * address);
+    char * _getBluetoothIDList();
+    void _connectById(const char * address);
     void _connectByListIndex(int index);
     void _send(Byte * data,int len);
     Byte* _recv(int len);

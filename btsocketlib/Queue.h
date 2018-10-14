@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)enqueue:(id)anObject ;
 - (void)add:(Byte[])array length:(int)length;
 - (Byte)remove;
+- (Byte)peek;
 - (int)count;
 @end
 
