@@ -20,6 +20,8 @@
 @property (nonatomic) ConnectMode mode;
 @property (nonatomic,strong) NSOperationQueue *readThreadQueue;
 @property (nonatomic,strong) NSOperationQueue *writeThreadQueue;
+@property (nonatomic,strong) LGCharacteristic *readChar;
+@property (nonatomic,strong) LGCharacteristic *writeChar;
 @property (nonatomic, strong) Queue *readQueue;
 @property (nonatomic, strong) Queue *writeQueue;
 @property (nonatomic) BOOL isReadReturn;
@@ -43,7 +45,6 @@ static btsocketlibImp *singleton  = nil;
 
     });
     
-    singleton.state = DisConnect;
     return singleton;
 }
 
@@ -54,6 +55,7 @@ static btsocketlibImp *singleton  = nil;
                                                      name:kLGPeripheralDidDisconnect
                                                    object:nil];
         singleton.mode = ServerMode;
+        singleton.state = DisConnect;
         self.readQueue = [[Queue alloc] initWithSize:kMaxQueueSize];
         self.writeQueue = [[Queue alloc] initWithSize:kMaxQueueSize];
         
@@ -116,7 +118,11 @@ static btsocketlibImp *singleton  = nil;
             break;
         }
     }
+    if (self == nil){
+        self.state = Failed;
+    }
     self.state = Connecting;
+    [[LGCentralManager sharedInstance] stopScanForPeripherals];
     [select connectWithCompletion:^(NSError *error) {
         if(error != nil){
             self.state = Failed;
@@ -125,6 +131,7 @@ static btsocketlibImp *singleton  = nil;
             self.connectedPeripheral = select;
             self.state = Connected;
             self.mode = ClientMode;
+            [self connectedAfter];
         }
     }];
     
@@ -133,8 +140,12 @@ static btsocketlibImp *singleton  = nil;
 -(void)connectByListIndex:(int)index{
     if(index > self.searchedPeripherals.count || index < 0){
         self.state = Failed;
+        return;
     }
+    
+     self.state = Connecting;
     LGPeripheral *select = self.searchedPeripherals[index];
+    [[LGCentralManager sharedInstance] stopScanForPeripherals];
     [select connectWithCompletion:^(NSError *error) {
         if(error != nil){
             self.state = Failed;
@@ -143,21 +154,40 @@ static btsocketlibImp *singleton  = nil;
             self.connectedPeripheral = select;
             self.state = Connected;
             self.mode = ClientMode;
+            [self connectedAfter];
         }
     }];
 }
+-(void)connectedAfter{
+    NSArray *services = @[[CBUUID UUIDWithString:kServiceUuidYouCanChange]];
+    [self.connectedPeripheral discoverServices:services completion:^(NSArray *services, NSError *error) {
+        if (services.count > 0){
+            [services[0] discoverCharacteristicsWithCompletion:^(NSArray *characteristics, NSError *error) {
+                for(LGCharacteristic *ch in characteristics){
+                    if([[ch.UUIDString lowercaseString] isEqualToString:[kCharWritesUuid lowercaseString]]){
+                        self.writeChar = ch;
+                    }else{
+                        self.readChar = ch;
+                    }
+                }
+                [self sendedProccess];
+            }];
+        }
+    }];
+}
+     
 
--(void)connectedProccess{
+-(void)sendedProccess{
     [self.writeThreadQueue cancelAllOperations];
     [self.writeThreadQueue addOperationWithBlock:^{
         if(self.mode == ClientMode){
             while(true){
                 int ms = 1000;
                 usleep(kConnectionInterval*ms);
-                if(self.isWriteReturn){
+                if(self.isWriteReturn && [[LGCentralManager sharedInstance] isCentralReady]){
                     self.isWriteReturn = false;
-                    int maxSize = [[self.connectedPeripheral cbPeripheral] maximumWriteValueLengthForType:CBCharacteristicWriteWithResponse];
-                    int size = self.writeQueue.count > maxSize ? maxSize : self.writeQueue.count;
+                    int maxSize = 185;//[[self.connectedPeripheral cbPeripheral] maximumWriteValueLengthForType:CBCharacteristicWriteWithResponse];
+                    int size = self.writeQueue.count > maxSize/2 ? maxSize/2 : self.writeQueue.count;
                     if(size <= 0){
                         self.isWriteReturn = true;
                         continue;
@@ -167,17 +197,18 @@ static btsocketlibImp *singleton  = nil;
                         sendData[i] = [self.writeQueue peek];
                     }
                     self.nowWriteStartTime = [[NSDate date] timeIntervalSince1970]*1000.0;
-                    [LGUtils writeData:[NSData dataWithBytes:&sendData length:size]
-                           charactUUID:kCharWriteUuidYouCanChange serviceUUID:kServiceUuidYouCanChange peripheral:self.connectedPeripheral completion:^(NSError *error) {
+                    /*[LGUtils writeData:[NSData dataWithBytes:sendData length:size] charactUUID:kCharWritesUuid serviceUUID:kServicesUuid peripheral:self.connectedPeripheral completion:^(NSError *error) {*/
+                    [self.writeChar writeValue:[NSData dataWithBytes:sendData length:size] completion:^(NSError *error) {
                                if(error != nil){
+                                   self.isWriteReturn = true;
                                }else{
                                    self.calculatedWriteTime = [[NSDate date] timeIntervalSince1970]*1000.0 - self.nowWriteStartTime;
                                    for(int i=0;i<size;i++){
                                        [self.writeQueue remove];
                                    }
+                                   self.isWriteReturn = true;
                                }
-                               self.isWriteReturn = true;
-                           }];
+                    }];
                 }
                 if(self.state == DisConnect){
                     break;
@@ -192,19 +223,25 @@ static btsocketlibImp *singleton  = nil;
             while(true){
                 int ms = 1000;
                 usleep(kConnectionInterval*ms);
-                if(self.isReadReturn){
+                if(self.isReadReturn&&[[LGCentralManager sharedInstance] isCentralReady]){
                     self.isReadReturn = false;
                     self.nowReadStartTime = [[NSDate date] timeIntervalSince1970]*1000.0;
-                    [LGUtils readDataFromCharactUUID:kCharReadUuidYouCanChange serviceUUID:kServiceUuidYouCanChange peripheral:self.connectedPeripheral completion:^(NSData *data, NSError *error) {
-                        self.calculatedReadTime = [[NSDate date] timeIntervalSince1970]*1000.0 - self.nowReadStartTime;
-                        int size = (int)[data length];
-                        if(size == 0){
-                            return;
+                    /*[LGUtils readDataFromCharactUUID:kCharReadsUuid serviceUUID:kServicesUuid peripheral:self.connectedPeripheral completion:^(NSData *data, NSError *error) {*/
+                    [self.readChar readValueWithBlock:^(NSData *data, NSError *error) {
+                        if(error!= nil){
+                            self.isReadReturn = true;
+                        }else{
+                            self.calculatedReadTime = [[NSDate date] timeIntervalSince1970]*1000.0 - self.nowReadStartTime;
+                            int size = (int)[data length];
+                            if(size == 0){
+                                return;
+                            }
+                            Byte readData[size];
+                            [data getBytes:readData length:size];
+                            [self.readQueue add:readData length:size];
+                            self.isReadReturn = true;
+                            
                         }
-                        Byte readData[size];
-                        [data getBytes:readData length:size];
-                        [self.readQueue add:readData length:size];
-                        self.isReadReturn = true;
                     }];
                 }
                 if(self.state == DisConnect){
@@ -219,14 +256,14 @@ static btsocketlibImp *singleton  = nil;
     [self.writeQueue add:data length:len];
 }
 
--(Byte*)recv:(int)len{
+-(BOOL)recv:(Byte *)data length:(int)len{
     if(self.readQueue.count<len){
-        return nil;
+        return false;
     }
     for(int i = 0;i<len;i++ ){
-        readDataBytes[i] = [self.readQueue remove];
+        data[i] = [self.readQueue remove];
     }
-    return readDataBytes;
+    return true;
 }
 
 -(long) getReadTime{

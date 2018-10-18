@@ -11,6 +11,9 @@
 NSString *const kServiceUuidYouCanChange = @"0000CA0C-0000-1000-8000-00805f9b34fb";
 NSString *const kCharWriteUuidYouCanChange = @"0000F9EF-0000-1000-8000-00805f9b34fb";
 NSString *const kCharReadUuidYouCanChange = @"0000F9EE-0000-1000-8000-00805f9b34fb";
+NSString *const kServicesUuid = @"CA0C";
+NSString *const kCharWritesUuid = @"F9EF";
+NSString *const kCharReadsUuid = @"F9EE";
 int const kConnectionInterval = 20;
 int const kMaxQueueSize = 4096;
 
@@ -34,7 +37,7 @@ typedef NS_ENUM(NSInteger, ConnectMode)  {
 -(void)connectById:(NSString *)address;
 -(void)connectByListIndex:(int)index;
 -(void)send:(Byte *) data length:(int) len;
--(Byte*)recv:(int)len;
+-(BOOL)recv:(Byte *) data length:(int)len;
 -(long) getReadTime;
 -(long) getWriteTime;
 -(int)getConnectState;

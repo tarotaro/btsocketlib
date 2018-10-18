@@ -21,9 +21,9 @@ void _searchDevice(){
 char * _getBluetoothIDList(){
     NSString *str =[[btsocketlibImp sharedInstance] getBluetoothIDList];
     const char *p = [str UTF8String];
-    char *ptr = (char *)malloc(sizeof(p));
-    memcpy(ptr,p,sizeof(p));
-    return ptr;
+    char* res = (char*)malloc(strlen(p) + 1);
+    strcpy(res, p);
+    return res;
 }
 void _connectById(const char * address){
     NSString *addr = [NSString stringWithUTF8String:address];
@@ -35,8 +35,8 @@ void _connectByListIndex(int index){
 void _send(Byte * data,int len){
     [[btsocketlibImp sharedInstance] send:data length:len];
 }
-Byte* _recv(int len){
-    return [[btsocketlibImp sharedInstance] recv:len];
+BOOL _recv(Byte * data,int len){
+    return [[btsocketlibImp sharedInstance] recv:data length:len];
 }
 
 long _getReadTime(){

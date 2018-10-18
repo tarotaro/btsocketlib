@@ -19,7 +19,7 @@ extern "C" {
     void _connectById(const char * address);
     void _connectByListIndex(int index);
     void _send(Byte * data,int len);
-    Byte* _recv(int len);
+    BOOL _recv(Byte *data,int len);
     long _getReadTime();
     long _getWriteTime();
     int _getConnectState();
