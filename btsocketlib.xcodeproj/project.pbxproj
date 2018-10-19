@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3440B6766C88B2CD02A8CF46 /* Pods_btsocketlib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3D21348319F7CBF827199FE /* Pods_btsocketlib.framework */; };
+		552718E9217A08D8007C992B /* BLEServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 552718E8217A08D8007C992B /* BLEServer.m */; };
 		55698D0D217269E000FACF4F /* Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = 55698D0C217269E000FACF4F /* Queue.m */; };
 		558E948F216E2FEA009B5B6D /* btsocketlibImp.m in Sources */ = {isa = PBXBuildFile; fileRef = 558E948E216E2FEA009B5B6D /* btsocketlibImp.m */; };
 		558E9490216E2FEA009B5B6D /* btsocketlibImp.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 558E948D216E2FEA009B5B6D /* btsocketlibImp.h */; };
@@ -28,6 +29,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		552718E7217A08D7007C992B /* BLEServer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLEServer.h; sourceTree = "<group>"; };
+		552718E8217A08D8007C992B /* BLEServer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLEServer.m; sourceTree = "<group>"; };
 		55698D0B217269E000FACF4F /* Queue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Queue.h; sourceTree = "<group>"; };
 		55698D0C217269E000FACF4F /* Queue.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Queue.m; sourceTree = "<group>"; };
 		558E948A216E2FEA009B5B6D /* libbtsocketlib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libbtsocketlib.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -87,6 +90,8 @@
 				558E9497216F99E1009B5B6D /* btsocketlib.h */,
 				55698D0B217269E000FACF4F /* Queue.h */,
 				55698D0C217269E000FACF4F /* Queue.m */,
+				552718E7217A08D7007C992B /* BLEServer.h */,
+				552718E8217A08D8007C992B /* BLEServer.m */,
 			);
 			path = btsocketlib;
 			sourceTree = "<group>";
@@ -194,6 +199,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				552718E9217A08D8007C992B /* BLEServer.m in Sources */,
 				558E9498216F99E1009B5B6D /* btsocketlib.mm in Sources */,
 				558E948F216E2FEA009B5B6D /* btsocketlibImp.m in Sources */,
 				55698D0D217269E000FACF4F /* Queue.m in Sources */,

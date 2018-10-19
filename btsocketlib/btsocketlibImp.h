@@ -16,6 +16,7 @@ NSString *const kCharWritesUuid = @"F9EF";
 NSString *const kCharReadsUuid = @"F9EE";
 int const kConnectionInterval = 20;
 int const kMaxQueueSize = 4096;
+int const MaxSize = 185;
 
 typedef NS_ENUM(NSInteger, ConnectState){
     DisConnect = 0,

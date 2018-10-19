@@ -9,6 +9,7 @@
 #import "btsocketlibImp.h"
 #import "LGBluetooth.h"
 #import "CBUUID+StringExtraction.h"
+#import "BLEServer.h"
 #import "Queue.h"
 
 
@@ -30,6 +31,8 @@
 @property (nonatomic) long nowWriteStartTime;
 @property (nonatomic) long calculatedReadTime;
 @property (nonatomic) long calculatedWriteTime;
+
+@property (nonatomic, strong) BLEServer *bleServer;
 
 @end
 
@@ -69,7 +72,8 @@ static btsocketlibImp *singleton  = nil;
 }
 
 -(void)startServer{
-    
+    self.mode = ServerMode;
+    self.bleServer = [[BLEServer alloc] init];    
 }
 
 -(void)searchDevice{
@@ -253,15 +257,26 @@ static btsocketlibImp *singleton  = nil;
 }
 
 -(void)send:(Byte *) data length:(int) len{
-    [self.writeQueue add:data length:len];
+    if(self.mode ==ClientMode){
+        [self.writeQueue add:data length:len];
+    }else{
+        [self.writeQueue add:data length:len];
+        [self.bleServer addWriteQueue:self.writeQueue];
+    }
 }
 
 -(BOOL)recv:(Byte *)data length:(int)len{
-    if(self.readQueue.count<len){
+    Queue * getQueue = nil;
+    if(self.mode == ClientMode){
+        getQueue = self.readQueue;
+    }else{
+        getQueue = [self.bleServer getReadQueue];
+    }
+    if(getQueue == nil||getQueue.count<len){
         return false;
     }
     for(int i = 0;i<len;i++ ){
-        data[i] = [self.readQueue remove];
+        data[i] = [getQueue remove];
     }
     return true;
 }
@@ -275,7 +290,15 @@ static btsocketlibImp *singleton  = nil;
 }
 
 -(int)getConnectState{
-    return self.state;
+    if(self.mode == ClientMode){
+        return self.state;
+    }else{
+        if (self.bleServer != nil && [self.bleServer getReadQueue].count){
+            return Connected;
+        }else{
+            return DisConnect;
+        }
+    }
 }
 
 -(void)disConnect{
