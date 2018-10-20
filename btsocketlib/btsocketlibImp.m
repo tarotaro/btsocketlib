@@ -168,7 +168,7 @@ static btsocketlibImp *singleton  = nil;
         if (services.count > 0){
             [services[0] discoverCharacteristicsWithCompletion:^(NSArray *characteristics, NSError *error) {
                 for(LGCharacteristic *ch in characteristics){
-                    if([[ch.UUIDString lowercaseString] isEqualToString:[kCharWritesUuid lowercaseString]]){
+                    if([[ch.UUIDString lowercaseString] isEqualToString:[kCharWriteUuidYouCanChange lowercaseString]]||[[ch.UUIDString lowercaseString] isEqualToString:[kCharWritesUuid lowercaseString]]){
                         self.writeChar = ch;
                     }else{
                         self.readChar = ch;
@@ -238,6 +238,7 @@ static btsocketlibImp *singleton  = nil;
                             self.calculatedReadTime = [[NSDate date] timeIntervalSince1970]*1000.0 - self.nowReadStartTime;
                             int size = (int)[data length];
                             if(size == 0){
+                                self.isReadReturn = true;
                                 return;
                             }
                             Byte readData[size];

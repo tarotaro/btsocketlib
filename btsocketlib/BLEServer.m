@@ -47,7 +47,7 @@
                                              CBCharacteristicPropertyRead
                                              );
     CBCharacteristicProperties wpropertie = (
-                                             CBCharacteristicPropertyRead
+                                             CBCharacteristicPropertyWrite|CBCharacteristicWriteWithResponse
                                              );
     CBAttributePermissions rpermission = (CBAttributePermissionsReadable);
     
@@ -121,6 +121,7 @@
     
 }
 
+
 - (void)peripheralManager:(CBPeripheralManager *)peripheral
     didReceiveReadRequest:(CBATTRequest *)request
 {
@@ -128,12 +129,17 @@
     {
         // Set the characteristic's value to the request
         int size = self.writeQueue.count > MaxSize ? MaxSize : self.writeQueue.count;
+        if(size == 0){
+            [self.peripheralManager respondToRequest:request
+                                          withResult:CBATTErrorSuccess];
+            return;
+        }
         Byte sendData[size];
         for(int i=0;i<size;i++){
             sendData[i] = [self.writeQueue remove];
         }
         NSData *data = [NSData dataWithBytes:sendData length:size];
-        
+        self.readCharacteristic.value = data;
         request.value = data;
         
         // Respond to the request
@@ -143,8 +149,7 @@
 }
 
 - (void)  peripheralManager:(CBPeripheralManager *)peripheral
-    didReceiveWriteRequests:(NSArray *)requests
-{
+    didReceiveWriteRequests:(nonnull NSArray<CBATTRequest *> *)requests{
     for (CBATTRequest *aRequest in requests)
     {
         if ([aRequest.characteristic.UUID isEqual:self.writeCharacteristic.UUID])
@@ -152,7 +157,11 @@
             // Set the request's value
             // to the correspondent characteristic
             int size = [aRequest.value length];
+            if(size == 0) {
+                continue;
+            }
             Byte wdata[size];
+            self.writeCharacteristic.value = aRequest.value;
             [aRequest.value getBytes:wdata length:size];
             [self.readQueue add:wdata length:size];
         }
