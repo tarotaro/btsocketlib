@@ -82,7 +82,7 @@
 }
 
 - (void)startAdvertizing{
-    NSDictionary *advertisementData = @{CBAdvertisementDataServiceDataKey:self.uuid,CBAdvertisementDataServiceUUIDsKey:@[[CBUUID UUIDWithString:kServiceUuidYouCanChange]]};
+    NSDictionary *advertisementData = @{CBAdvertisementDataLocalNameKey:self.uuid,CBAdvertisementDataServiceUUIDsKey:@[[CBUUID UUIDWithString:kServiceUuidYouCanChange]]};
     [self.peripheralManager startAdvertising:advertisementData];
 }
 

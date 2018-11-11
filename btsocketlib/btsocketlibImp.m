@@ -109,7 +109,14 @@ static btsocketlibImp *singleton  = nil;
     for(int i = 0;i < self.searchedPeripherals.count;i++){
         LGPeripheral *ph= self.searchedPeripherals[i];
         NSDictionary *data = ph.advertisingData[CBAdvertisementDataServiceDataKey];
-        NSString *pname =[[NSString alloc] initWithData:data[[CBUUID UUIDWithString:kServiceUuidYouCanChange]] encoding:NSUTF8StringEncoding];
+        NSString *pname;
+        if(data != nil){
+            pname =[[NSString alloc] initWithData:data[[CBUUID UUIDWithString:kServiceUuidYouCanChange]] encoding:NSUTF8StringEncoding];
+        }else{
+            //iOSは、CBAdvertisementDataServiceDataKeyが送れないようなので、
+            //peripheralのローカルネームで代用
+            pname = ph.name;
+        }
         NSString *name = pname == nil ? @"NoName" : pname;
         NSDictionary *dic = @{@"device":name,@"address":ph.UUIDString};
         [bluetoothlist addObject:dic];
