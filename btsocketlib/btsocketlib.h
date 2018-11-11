@@ -14,9 +14,10 @@
 extern "C" {
     void _startServer();
     void _searchDevice();
+    char * _getId();
     
     char * _getBluetoothIDList();
-    void _connectById(const char * address);
+    void _connectById(const char * uuid);
     void _connectByListIndex(int index);
     void _send(Byte * data,int len);
     BOOL _recv(Byte *data,int len);

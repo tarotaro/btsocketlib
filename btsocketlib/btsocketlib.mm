@@ -18,6 +18,14 @@ void _searchDevice(){
     [[btsocketlibImp sharedInstance] searchDevice];
 }
 
+char * _getId(){
+    NSString *str = [[btsocketlibImp sharedInstance] getId];
+    const char *p = [str UTF8String];
+    char* res = (char*)malloc(strlen(p)+1);
+    strcpy(res,p);
+    return res;
+}
+
 char * _getBluetoothIDList(){
     NSString *str =[[btsocketlibImp sharedInstance] getBluetoothIDList];
     const char *p = [str UTF8String];
@@ -25,9 +33,9 @@ char * _getBluetoothIDList(){
     strcpy(res, p);
     return res;
 }
-void _connectById(const char * address){
-    NSString *addr = [NSString stringWithUTF8String:address];
-    [[btsocketlibImp sharedInstance] connectById:addr];
+void _connectById(const char * uuid){
+    NSString *_uuid = [NSString stringWithUTF8String:uuid];
+    [[btsocketlibImp sharedInstance] connectById:_uuid];
 }
 void _connectByListIndex(int index){
     [[btsocketlibImp sharedInstance] connectByListIndex:index];

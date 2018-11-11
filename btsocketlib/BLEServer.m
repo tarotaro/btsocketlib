@@ -22,6 +22,7 @@
 @property (nonatomic, strong) CBMutableCharacteristic *readCharacteristic;
 @property (nonatomic, strong) Queue *readQueue;
 @property (nonatomic, strong) Queue *writeQueue;
+@property (nonatomic, strong) NSString *uuid;
 @property (nonatomic) ConnectState state;
 
 @end
@@ -32,6 +33,7 @@
     if (self = [super init]) {
         self.readQueue = [[Queue alloc] initWithSize:kMaxQueueSize];
         self.writeQueue = [[Queue alloc] initWithSize:kMaxQueueSize];
+        self.uuid = [[[NSUUID UUID] UUIDString] substringWithRange:NSMakeRange(0, 4)];
         [self setupBluetooth];
     }
     
@@ -80,8 +82,12 @@
 }
 
 - (void)startAdvertizing{
-    NSDictionary *advertisementData = @{CBAdvertisementDataLocalNameKey:[[UIDevice currentDevice] name],CBAdvertisementDataServiceUUIDsKey:@[[CBUUID UUIDWithString:kServiceUuidYouCanChange]]};
+    NSDictionary *advertisementData = @{CBAdvertisementDataServiceDataKey:self.uuid,CBAdvertisementDataServiceUUIDsKey:@[[CBUUID UUIDWithString:kServiceUuidYouCanChange]]};
     [self.peripheralManager startAdvertising:advertisementData];
+}
+
+-(NSString *)getDeviceID{
+    return self.uuid;
 }
 
 -(void)stopAdvertizing{

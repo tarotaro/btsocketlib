@@ -76,6 +76,13 @@ static btsocketlibImp *singleton  = nil;
     self.bleServer = [[BLEServer alloc] init];    
 }
 
+-(NSString *)getId{
+    if(self.bleServer != nil){
+        return [self.bleServer getDeviceID];
+    }
+    return nil;
+}
+
 -(void)searchDevice{
     NSArray *services = @[[CBUUID UUIDWithString:kServiceUuidYouCanChange]];
     if([[LGCentralManager sharedInstance] isCentralReady]){
@@ -101,7 +108,9 @@ static btsocketlibImp *singleton  = nil;
     NSMutableArray *bluetoothlist = [NSMutableArray array];
     for(int i = 0;i < self.searchedPeripherals.count;i++){
         LGPeripheral *ph= self.searchedPeripherals[i];
-        NSString *name = ph.name == nil ? @"NoName" : ph.name;
+        NSDictionary *data = ph.advertisingData[CBAdvertisementDataServiceDataKey];
+        NSString *pname =[[NSString alloc] initWithData:data[[CBUUID UUIDWithString:kServiceUuidYouCanChange]] encoding:NSUTF8StringEncoding];
+        NSString *name = pname == nil ? @"NoName" : pname;
         NSDictionary *dic = @{@"device":name,@"address":ph.UUIDString};
         [bluetoothlist addObject:dic];
     }
@@ -114,10 +123,10 @@ static btsocketlibImp *singleton  = nil;
     return jsonStr;
 }
 
--(void)connectById:(NSString *)address{
+-(void)connectById:(NSString *)uuid{
     LGPeripheral *select = nil;
     for(int i = 0 ;i< self.searchedPeripherals.count ;i++){
-        if([[self.searchedPeripherals[i] UUIDString] isEqualToString:address]){
+        if([[self.searchedPeripherals[i] name] isEqualToString:uuid]){
             select = self.searchedPeripherals[i];
             break;
         }
@@ -295,9 +304,14 @@ static btsocketlibImp *singleton  = nil;
         return self.state;
     }else{
         if (self.bleServer != nil && [self.bleServer getReadQueue].count){
+            self.state = Connected;
             return Connected;
         }else{
-            return DisConnect;
+            if(self.state != Connected){
+                return DisConnect;
+            }else{
+                return Connected;
+            }
         }
     }
 }

@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)startAdvertizing;
 - (void)stopAdvertizing;
 -(Queue *)getReadQueue;
+-(NSString *)getDeviceID;
 -(void)addWriteQueue:(Queue *) queue;
 
 @end
