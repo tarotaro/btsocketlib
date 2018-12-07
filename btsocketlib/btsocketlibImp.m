@@ -45,7 +45,6 @@ static btsocketlibImp *singleton  = nil;
     static dispatch_once_t once;
     dispatch_once( &once, ^{
        singleton =  [[btsocketlibImp alloc] init];
-
     });
     
     return singleton;
@@ -85,12 +84,17 @@ static btsocketlibImp *singleton  = nil;
 
 -(void)searchDevice{
     NSArray *services = @[[CBUUID UUIDWithString:kServiceUuidYouCanChange]];
-    if([[LGCentralManager sharedInstance] isCentralReady]){
-        [[LGCentralManager sharedInstance] scanForPeripheralsByInterval:5 services:services options:nil completion:^(NSArray *peripherals) {
-            if(peripherals.count > 0){
-                self.searchedPeripherals = peripherals;
-            }
-        }];
+    while(true){
+        if([[LGCentralManager sharedInstance] isCentralReady]){
+            [[LGCentralManager sharedInstance] scanForPeripheralsByInterval:5 services:services options:nil completion:^(NSArray *peripherals) {
+                if(peripherals.count > 0){
+                    self.searchedPeripherals = peripherals;
+                }
+            }];
+        }
+        if ([[LGCentralManager sharedInstance] isScanning]){
+            break;
+        }
     }
 }
 
