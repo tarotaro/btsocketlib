@@ -25,12 +25,14 @@
 @property (nonatomic,strong) LGCharacteristic *writeChar;
 @property (nonatomic, strong) Queue *readQueue;
 @property (nonatomic, strong) Queue *writeQueue;
+@property (nonatomic,strong) NSMutableArray * deviceList;
 @property (nonatomic) BOOL isReadReturn;
 @property (nonatomic) BOOL isWriteReturn;
 @property (nonatomic) long nowReadStartTime;
 @property (nonatomic) long nowWriteStartTime;
 @property (nonatomic) long calculatedReadTime;
 @property (nonatomic) long calculatedWriteTime;
+
 
 @property (nonatomic, strong) BLEServer *bleServer;
 
@@ -109,7 +111,7 @@ static btsocketlibImp *singleton  = nil;
         return jsonStr;
     }
     
-    NSMutableArray *bluetoothlist = [NSMutableArray array];
+    self.deviceList = [NSMutableArray array];
     for(int i = 0;i < self.searchedPeripherals.count;i++){
         LGPeripheral *ph= self.searchedPeripherals[i];
         NSDictionary *data = ph.advertisingData[CBAdvertisementDataServiceDataKey];
@@ -123,10 +125,10 @@ static btsocketlibImp *singleton  = nil;
         }
         NSString *name = pname == nil ? @"NoName" : pname;
         NSDictionary *dic = @{@"device":name,@"address":ph.UUIDString};
-        [bluetoothlist addObject:dic];
+        [self.deviceList addObject:dic];
     }
-    NSDictionary *devices = @{@"devices":bluetoothlist};
-    
+
+    NSDictionary *devices = @{@"devices":self.deviceList};
     NSError *error;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:devices options:NSJSONWritingPrettyPrinted error:&error];
     
@@ -137,7 +139,8 @@ static btsocketlibImp *singleton  = nil;
 -(void)connectById:(NSString *)uuid{
     LGPeripheral *select = nil;
     for(int i = 0 ;i< self.searchedPeripherals.count ;i++){
-        if([[self.searchedPeripherals[i] name] isEqualToString:uuid]){
+        NSDictionary * devDic = self.deviceList[i];
+        if([[devDic objectForKey:@"device"] isEqualToString:uuid]){
             select = self.searchedPeripherals[i];
             break;
         }
