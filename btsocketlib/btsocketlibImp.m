@@ -77,7 +77,7 @@ static btsocketlibImp *singleton  = nil;
     self.bleServer = [[BLEServer alloc] init];    
 }
 
--(NSString *)getId{
+-(NSString *)getUuidForName{
     if(self.bleServer != nil){
         return [self.bleServer getDeviceID];
     }
@@ -100,7 +100,7 @@ static btsocketlibImp *singleton  = nil;
     }
 }
 
--(NSString *)getBluetoothIDList{
+-(NSString *)getBluetoothList{
     if(self.searchedPeripherals == nil){
         NSArray *array = [NSArray array];
         NSDictionary *devices = @{@"devices":array};
@@ -116,15 +116,18 @@ static btsocketlibImp *singleton  = nil;
         LGPeripheral *ph= self.searchedPeripherals[i];
         NSDictionary *data = ph.advertisingData[CBAdvertisementDataServiceDataKey];
         NSString *pname;
+        NSString *uuid;
         if(data != nil){
             pname =[[NSString alloc] initWithData:data[[CBUUID UUIDWithString:kServiceUuidYouCanChange]] encoding:NSUTF8StringEncoding];
         }else{
             //iOSは、CBAdvertisementDataServiceDataKeyが送れないようなので、
             //peripheralのローカルネームで代用
             pname = ph.name;
+            uuid = ph.advertisingData[CBAdvertisementDataLocalNameKey];
         }
         NSString *name = pname == nil ? @"NoName" : pname;
-        NSDictionary *dic = @{@"device":name,@"address":ph.UUIDString};
+        uuid = uuid == nil ? pname : uuid;
+        NSDictionary *dic = @{@"device":name,@"address":ph.UUIDString,@"uuid":uuid};
         [self.deviceList addObject:dic];
     }
 
@@ -136,11 +139,11 @@ static btsocketlibImp *singleton  = nil;
     return jsonStr;
 }
 
--(void)connectById:(NSString *)uuid{
+-(void)connectByUuid:(NSString *)uuid{
     LGPeripheral *select = nil;
     for(int i = 0 ;i< self.searchedPeripherals.count ;i++){
         NSDictionary * devDic = self.deviceList[i];
-        if([[devDic objectForKey:@"device"] isEqualToString:uuid]){
+        if([[devDic objectForKey:@"uuid"] isEqualToString:uuid]){
             select = self.searchedPeripherals[i];
             break;
         }

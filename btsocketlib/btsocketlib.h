@@ -12,19 +12,19 @@
 
 
 extern "C" {
-    void _startServer();
-    void _searchDevice();
-    char * _getId();
+    void startServer();
+    void searchDevice();
+    char * getUuidForName();
     
-    char * _getBluetoothIDList();
-    void _connectById(const char * uuid);
-    void _connectByListIndex(int index);
-    void _send(Byte * data,int len);
-    BOOL _recv(Byte *data,int len);
-    long _getReadTime();
-    long _getWriteTime();
-    int _getConnectState();
-    void _disConnect();
+    char * getBluetoothList();
+    void connectByUuid(const char * uuid);
+    void connectByListIndex(int index);
+    void send(Byte * data,int len);
+    BOOL recv(Byte *data,int len);
+    long getReadTime();
+    long getWriteTime();
+    int getConnectState();
+    void disConnect();
 
 }
 

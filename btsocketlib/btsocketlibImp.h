@@ -33,10 +33,10 @@ typedef NS_ENUM(NSInteger, ConnectMode)  {
 @interface btsocketlibImp : NSObject
 + (btsocketlibImp*)sharedInstance;
 -(void)startServer;
--(NSString *)getId;
+-(NSString *)getUuidForName;
 -(void)searchDevice;
--(NSString *)getBluetoothIDList;
--(void)connectById:(NSString *)address;
+-(NSString *)getBluetoothList;
+-(void)connectByUuid:(NSString *)uuid;
 -(void)connectByListIndex:(int)index;
 -(void)send:(Byte *) data length:(int) len;
 -(BOOL)recv:(Byte *) data length:(int)len;
