@@ -116,7 +116,6 @@
 				558E9486216E2FEA009B5B6D /* Sources */,
 				558E9487216E2FEA009B5B6D /* Frameworks */,
 				558E9488216E2FEA009B5B6D /* CopyFiles */,
-				196020ACAB43983E3887E309 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -159,21 +158,6 @@
 /* End PBXProject section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		196020ACAB43983E3887E309 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-btsocketlib/Pods-btsocketlib-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		2D5C5A639CB7C5072142E45E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;

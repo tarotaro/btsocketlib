@@ -10,15 +10,15 @@
 #include "btsocketlibImp.h"
 
 
-void startServer(){
+void Bt_startServer(){
     [[btsocketlibImp sharedInstance] startServer];
 }
 
-void searchDevice(){
+void Bt_searchDevice(){
     [[btsocketlibImp sharedInstance] searchDevice];
 }
 
-char * getUuidForName(){
+char * Bt_getUuidForName(){
     NSString *str = [[btsocketlibImp sharedInstance] getUuidForName];
     const char *p = [str UTF8String];
     char* res = (char*)malloc(strlen(p)+1);
@@ -26,37 +26,37 @@ char * getUuidForName(){
     return res;
 }
 
-char * getBluetoothList(){
+char * Bt_getBluetoothList(){
     NSString *str =[[btsocketlibImp sharedInstance] getBluetoothList];
     const char *p = [str UTF8String];
     char* res = (char*)malloc(strlen(p) + 1);
     strcpy(res, p);
     return res;
 }
-void connectByUuid(const char * uuid){
+void Bt_connectByUuid(const char * uuid){
     NSString *_uuid = [NSString stringWithUTF8String:uuid];
     [[btsocketlibImp sharedInstance] connectByUuid:_uuid];
 }
-void connectByListIndex(int index){
+void Bt_connectByListIndex(int index){
     [[btsocketlibImp sharedInstance] connectByListIndex:index];
 }
-void send(Byte * data,int len){
+void Bt_send(Byte * data,int len){
     [[btsocketlibImp sharedInstance] send:data length:len];
 }
-BOOL recv(Byte * data,int len){
+BOOL Bt_recv(Byte * data,int len){
     return [[btsocketlibImp sharedInstance] recv:data length:len];
 }
 
-long getReadTime(){
+long Bt_getReadTime(){
     return [[btsocketlibImp sharedInstance] getReadTime];
 }
 
-long getWriteTime(){
+long Bt_getWriteTime(){
     return [[btsocketlibImp sharedInstance] getWriteTime];
 }
-int getConnectState(){
+int Bt_getConnectState(){
     return [[btsocketlibImp sharedInstance] getConnectState];
 }
-void disConnect(){
+void Bt_disConnect(){
     [[btsocketlibImp sharedInstance] disConnect];
 }

@@ -4,9 +4,13 @@ PODS:
 DEPENDENCIES:
   - LGBluetooth (~> 1.1.5)
 
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - LGBluetooth
+
 SPEC CHECKSUMS:
   LGBluetooth: 8407d2de27bcbd4a9e11243290b928293ffa8881
 
 PODFILE CHECKSUM: 61bd5a79931379a4585bd0c64ad3455e21c8dbe7
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.5.3
