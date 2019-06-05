@@ -33,7 +33,7 @@
     if (self = [super init]) {
         self.readQueue = [[Queue alloc] initWithSize:kMaxQueueSize];
         self.writeQueue = [[Queue alloc] initWithSize:kMaxQueueSize];
-        self.uuid = [[[NSUUID UUID] UUIDString] substringWithRange:NSMakeRange(0, 4)];
+        self.uuid = [[[NSUUID UUID] UUIDString] substringWithRange:NSMakeRange(0, 6)];
         [self setupBluetooth];
     }
     
