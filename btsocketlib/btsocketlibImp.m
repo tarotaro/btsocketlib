@@ -86,9 +86,13 @@ static btsocketlibImp *singleton  = nil;
 
 -(void)searchDevice{
     NSArray *services = @[[CBUUID UUIDWithString:kServiceUuidYouCanChange]];
+    if ([[LGCentralManager sharedInstance] isScanning]){
+        return;
+    }
+
     while(true){
         if([[LGCentralManager sharedInstance] isCentralReady]){
-            [[LGCentralManager sharedInstance] scanForPeripheralsByInterval:5 services:services options:nil completion:^(NSArray *peripherals) {
+            [[LGCentralManager sharedInstance] scanForPeripheralsByInterval:10 services:services options:nil completion:^(NSArray *peripherals) {
                 if(peripherals.count > 0){
                     self.searchedPeripherals = peripherals;
                 }
@@ -97,7 +101,9 @@ static btsocketlibImp *singleton  = nil;
         if ([[LGCentralManager sharedInstance] isScanning]){
             break;
         }
+        
     }
+
 }
 
 -(NSString *)getBluetoothList{
@@ -224,7 +230,7 @@ static btsocketlibImp *singleton  = nil;
                     }
                     Byte sendData[size];
                     for(int i=0;i<size;i++){
-                        sendData[i] = [self.writeQueue peek];
+                        sendData[i] = [self.writeQueue objectAtIndex:i];
                     }
                     self.nowWriteStartTime = [[NSDate date] timeIntervalSince1970]*1000.0;
                     /*[LGUtils writeData:[NSData dataWithBytes:sendData length:size] charactUUID:kCharWritesUuid serviceUUID:kServicesUuid peripheral:self.connectedPeripheral completion:^(NSError *error) {*/

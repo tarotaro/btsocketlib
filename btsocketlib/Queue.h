@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)add:(Byte[])array length:(int)length;
 - (Byte)remove;
 - (Byte)peek;
+- (Byte)objectAtIndex:(int)index;
 - (int)count;
 @end
 

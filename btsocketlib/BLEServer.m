@@ -99,7 +99,8 @@
 }
 
 -(void)addWriteQueue:(Queue *) queue{
-    for(int i = 0;i<queue.count;i++){
+    int size = queue.count;
+    for(int i = 0;i<size;i++){
         [self.writeQueue enqueue:[queue dequeue]];
     }
 }

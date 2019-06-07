@@ -63,6 +63,11 @@
     return [num charValue];
 }
 
+- (Byte)objectAtIndex:(int)index {
+    NSNumber *num = [queue objectAtIndex:index];
+    return [num charValue];
+}
+
 -(Byte)peek {
     NSNumber *num = [queue objectAtIndex:0];
     return [num charValue];
