@@ -135,7 +135,8 @@
     if ([request.characteristic.UUID isEqual:self.readCharacteristic.UUID])
     {
         // Set the characteristic's value to the request
-        int size = self.writeQueue.count > MaxSize ? MaxSize : self.writeQueue.count;
+        NSInteger maxSize = request.central.maximumUpdateValueLength;
+        int size = self.writeQueue.count > maxSize ? maxSize : self.writeQueue.count;
         if(size == 0){
             [self.peripheralManager respondToRequest:request
                                           withResult:CBATTErrorSuccess];

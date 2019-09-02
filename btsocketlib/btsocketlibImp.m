@@ -222,8 +222,8 @@ static btsocketlibImp *singleton  = nil;
                 usleep(kConnectionInterval*ms);
                 if(self.isWriteReturn && [[LGCentralManager sharedInstance] isCentralReady]){
                     self.isWriteReturn = false;
-                    int maxSize = 185;//[[self.connectedPeripheral cbPeripheral] maximumWriteValueLengthForType:CBCharacteristicWriteWithResponse];
-                    int size = self.writeQueue.count > maxSize/2 ? maxSize/2 : self.writeQueue.count;
+                    int maxSize = /*MaxSize;*/[[self.connectedPeripheral cbPeripheral] maximumWriteValueLengthForType:CBCharacteristicWriteWithResponse];
+                    int size = self.writeQueue.count > maxSize ? maxSize : self.writeQueue.count;
                     if(size <= 0){
                         self.isWriteReturn = true;
                         continue;
@@ -259,7 +259,7 @@ static btsocketlibImp *singleton  = nil;
             while(true){
                 int ms = 1000;
                 usleep(kConnectionInterval*ms);
-                if(self.isReadReturn&&[[LGCentralManager sharedInstance] isCentralReady]){
+                if(self.isReadReturn && [[LGCentralManager sharedInstance] isCentralReady]){
                     self.isReadReturn = false;
                     self.nowReadStartTime = [[NSDate date] timeIntervalSince1970]*1000.0;
                     /*[LGUtils readDataFromCharactUUID:kCharReadsUuid serviceUUID:kServicesUuid peripheral:self.connectedPeripheral completion:^(NSData *data, NSError *error) {*/
